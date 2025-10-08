@@ -19,6 +19,12 @@ sudo chmod +x /usr/local/bin/twit
 
 ## Commands
 
+Build Command (to build the jar file)
+
+```shell
+./gradlew clean build
+```
+
 You can run commands like:
 ```bash
 twit init 
