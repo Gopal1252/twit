@@ -22,7 +22,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.gopal.twit.Twit")
+    mainClass.set("com.gopal.twit.Main")
 }
 
 tasks.test {
@@ -31,7 +31,7 @@ tasks.test {
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "com.gopal.twit.Twit"
+        attributes["Main-Class"] = "com.gopal.twit.Main"
     }
     // Include all dependencies in the JAR
     from({

@@ -1,7 +1,7 @@
 package com.gopal.twit;
 
-public class Twit {
+public class Main {
     public static void main(String[] args) {
-        LibTwit.main(args);
+        System.out.println("Hello");
     }
 }

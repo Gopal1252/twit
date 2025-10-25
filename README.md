@@ -4,7 +4,7 @@
 Add a shell script to execute the jar file
 
 ```bash
-java -jar root/build/libs/twit-1.0.jar "$@"
+java -cp "root/build/libs/twit-1.0.jar" com.yourName.root.Main "$@"
 ```
 
 ## Make twit a Global Command
