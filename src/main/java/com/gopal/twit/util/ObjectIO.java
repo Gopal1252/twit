@@ -120,6 +120,7 @@ public class ObjectIO {
 
     /**
      * Hash a file into a Git Object
+     * Used by hash-object command to hash a file
      */
     public static String objectHash(InputStream in , String fmt, GitRepository repo) throws Exception{
         byte[] data = in.readAllBytes();

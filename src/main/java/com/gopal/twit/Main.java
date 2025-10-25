@@ -12,6 +12,8 @@ public class Main {
 
     static {
         commands.put("init", new InitCommand());
+        commands.put("cat-file", new CatFileCommand());
+        commands.put("hash-object", new HashObjectCommand());
         //TODO: Add rest of the commands
     }
 
