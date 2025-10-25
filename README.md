@@ -1,4 +1,4 @@
-# twit - a git clone
+# twit - A minimal git implementation in java for learning purposes
 
 ## Add a shell script
 Add a shell script to execute the jar file
@@ -30,3 +30,6 @@ You can run commands like:
 twit init 
 twit commit
 ```
+
+## Acknowledgements
+Based on "Write Yourself a Git" tutorial by Thibault Polge
