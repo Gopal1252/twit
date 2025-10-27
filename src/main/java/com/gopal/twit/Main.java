@@ -14,7 +14,19 @@ public class Main {
         commands.put("init", new InitCommand());
         commands.put("cat-file", new CatFileCommand());
         commands.put("hash-object", new HashObjectCommand());
+        commands.put("log", new LogCommand());
+        commands.put("checkout", new CheckoutCommand());
+        commands.put("ls-tree", new LsTreeCommand());
+        commands.put("show-ref", new ShowRefCommand());
         //TODO: Add rest of the commands
+        //commands.put("tag", new TagCommand());
+        //commands.put("rev-parse", new RevParseCommand());
+        //commands.put("ls-files", new LsFilesCommand());
+        //commands.put("check-ignore", new CheckIgnoreCommand());
+        //commands.put("status", new StatusCommand());
+        //commands.put("add", new AddCommand());
+        //commands.put("rm", new RmCommand());
+        //commands.put("commit", new CommitCommand());
     }
 
     public static void main(String[] args) {
