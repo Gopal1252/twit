@@ -18,8 +18,8 @@ public class Main {
         commands.put("checkout", new CheckoutCommand());
         commands.put("ls-tree", new LsTreeCommand());
         commands.put("show-ref", new ShowRefCommand());
+        commands.put("tag", new TagCommand());
         //TODO: Add rest of the commands
-        //commands.put("tag", new TagCommand());
         //commands.put("rev-parse", new RevParseCommand());
         //commands.put("ls-files", new LsFilesCommand());
         //commands.put("check-ignore", new CheckIgnoreCommand());
