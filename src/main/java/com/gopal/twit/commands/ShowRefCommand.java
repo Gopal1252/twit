@@ -1,7 +1,7 @@
 package com.gopal.twit.commands;
 
 import com.gopal.twit.core.GitRepository;
-import com.gopal.twit.core.ref.RefResolver;
+import com.gopal.twit.util.RefResolver;
 
 import java.util.Map;
 

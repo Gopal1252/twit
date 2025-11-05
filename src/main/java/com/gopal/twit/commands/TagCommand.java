@@ -2,7 +2,7 @@ package com.gopal.twit.commands;
 
 import com.gopal.twit.core.GitRepository;
 import com.gopal.twit.core.objects.GitTag;
-import com.gopal.twit.core.ref.RefResolver;
+import com.gopal.twit.util.RefResolver;
 import com.gopal.twit.util.ObjectIO;
 
 import java.nio.charset.StandardCharsets;

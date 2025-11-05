@@ -4,7 +4,7 @@ import com.gopal.twit.core.GitRepository;
 import com.gopal.twit.core.objects.GitObject;
 import com.gopal.twit.core.objects.GitTree;
 import com.gopal.twit.core.objects.GitTreeLeaf;
-import com.gopal.twit.core.ref.RefResolver;
+import com.gopal.twit.util.RefResolver;
 import com.gopal.twit.util.ObjectIO;
 
 /**

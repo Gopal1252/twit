@@ -1,10 +1,9 @@
-package com.gopal.twit.core.ref;
+package com.gopal.twit.util;
 
 import com.gopal.twit.core.GitRepository;
 import com.gopal.twit.core.objects.GitCommit;
 import com.gopal.twit.core.objects.GitObject;
 import com.gopal.twit.core.objects.GitTag;
-import com.gopal.twit.util.ObjectIO;
 
 import java.io.IOException;
 import java.nio.file.Files;
