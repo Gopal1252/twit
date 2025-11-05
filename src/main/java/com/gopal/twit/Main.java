@@ -22,10 +22,10 @@ public class Main {
         commands.put("rev-parse", new RevParseCommand());
         commands.put("ls-files", new LsFilesCommand());
         commands.put("check-ignore", new CheckIgnoreCommand());
+        commands.put("status", new StatusCommand());
+        commands.put("add", new AddCommand());
+        commands.put("rm", new RmCommand());
         //TODO: Add rest of the commands
-        //commands.put("status", new StatusCommand());
-        //commands.put("add", new AddCommand());
-        //commands.put("rm", new RmCommand());
         //commands.put("commit", new CommitCommand());
     }
 

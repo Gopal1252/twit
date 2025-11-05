@@ -1,8 +1,7 @@
 package com.gopal.twit.util;
 
 import com.gopal.twit.core.GitRepository;
-import com.gopal.twit.core.objects.GitBlob;
-import com.gopal.twit.core.objects.GitObject;
+import com.gopal.twit.core.objects.*;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -127,8 +126,10 @@ public class ObjectIO {
 
         //Create appropriate object
         GitObject obj = switch (fmt) {
-            case "blob" -> new GitBlob();
-            //TODO: add for other objects
+            case "commit" -> new GitCommit(data);
+            case "tree" -> new GitTree(data);
+            case "tag" -> new GitTag();
+            case "blob" -> new GitBlob(data);
             default -> throw new Exception("Unknown type " + fmt);
         };
 

@@ -11,7 +11,7 @@ public class CheckIgnoreCommand implements Command{
     @Override
     public void execute(String[] args) throws Exception {
         if(args.length == 0){
-            System.out.println("Usage: twit check-ignore <path>...");
+            System.err.println("Usage: twit check-ignore <path>...");
             return;
         }
 
