@@ -25,8 +25,7 @@ public class Main {
         commands.put("status", new StatusCommand());
         commands.put("add", new AddCommand());
         commands.put("rm", new RmCommand());
-        //TODO: Add rest of the commands
-        //commands.put("commit", new CommitCommand());
+        commands.put("commit", new CommitCommand());
     }
 
     public static void main(String[] args) {
