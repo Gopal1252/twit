@@ -1,7 +1,7 @@
 # twit - A minimal git implementation in java for learning purposes
 
 ## Add a shell script
-Add a shell script (twit.sh) to execute the jar file
+Add a shell script (twit.sh) to execute the jar file. Make sure to replace the root with root of your project and also the package location of your Main file
 
 ```bash
 java -cp "root/build/libs/twit-1.0.jar" com.yourName.root.Main "$@"
