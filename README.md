@@ -26,10 +26,24 @@ Build Command (to build the jar file)
 ```
 
 You can run commands like:
-```bash
-twit init 
-twit commit
-```
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `init` | Initialize a new repository | `twit init [path]` |
+| `hash-object` | Compute object ID and optionally store it | `twit hash-object [-w] [-t TYPE] FILE` |
+| `cat-file` | Display object contents | `twit cat-file <type> <object>` |
+| `ls-tree` | List contents of a tree object | `twit ls-tree [-r] <tree>` |
+| `checkout` | Checkout a commit into a directory | `twit checkout <commit> <path>` |
+| `log` | Show commit history (Graphviz format) | `twit log [commit]` |
+| `show-ref` | List references | `twit show-ref` |
+| `tag` | Create or list tags | `twit tag [-a] [name] [object]` |
+| `rev-parse` | Parse revision identifiers | `twit rev-parse [--twit-type TYPE] <name>` |
+| `ls-files` | List files in the index | `twit ls-files [--verbose]` |
+| `check-ignore` | Check if paths are ignored | `twit check-ignore <path>...` |
+| `status` | Show working tree status | `twit status` |
+| `add` | Add file contents to the index | `twit add <path>...` |
+| `rm` | Remove files from index and worktree | `twit rm <path>...` |
+| `commit` | Record changes to the repository | `twit commit -m <message>` |
 
 ## Acknowledgements
 Based on "Write Yourself a Git" tutorial by Thibault Polge
