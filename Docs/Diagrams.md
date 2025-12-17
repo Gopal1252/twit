@@ -792,11 +792,13 @@ graph TD
 
 ## Storage Structure Diagram
 
+### Git Repository Structure
+
 ```mermaid
-graph TB
+graph TD
     subgraph "Git Repository Structure"
         Root[".git/"]
-        
+
         subgraph "Objects Storage"
             ObjDir["objects/"]
             Obj00["00/"]
@@ -807,7 +809,7 @@ graph TB
             CommitFile["f1e2d3c4b5a6... (commit)"]
             TreeFile["1a2b3c4d5e6f... (tree)"]
         end
-        
+
         subgraph "References"
             RefDir["refs/"]
             HeadsDir["heads/"]
@@ -816,7 +818,7 @@ graph TB
             Feature["feature -> SHA"]
             V10["v1.0 -> SHA"]
         end
-        
+
         subgraph "Working Area"
             Index["index (binary)"]
             Head["HEAD -> ref: refs/heads/master"]
@@ -824,7 +826,6 @@ graph TB
             Desc["description"]
         end
     end
-
     Root --> ObjDir & RefDir & Index & Head & Config & Desc
     ObjDir --> Obj00 & Obj01 & ObjFF & ObjDots
     Obj00 --> BlobFile
@@ -833,21 +834,25 @@ graph TB
     RefDir --> HeadsDir & TagsDir
     HeadsDir --> Master & Feature
     TagsDir --> V10
+```
+### Object Content Examples
 
+```mermaid
+graph TD
     subgraph "Object Content Examples"
         subgraph "Blob Object"
             B1["Header: blob 13 (null)"]
             B2["Content: Hello, World!"]
             B3["Stored as: .git/objects/8a/b686ea..."]
         end
-        
+
         subgraph "Tree Object"
             T1["100644 blob a1b2c3... README.md"]
             T2["100644 blob d4e5f6... file.txt"]
             T3["040000 tree 1a2b3c... src"]
             T4["Stored as: .git/objects/7f/8e9d0c..."]
         end
-        
+
         subgraph "Commit Object"
             C1["tree 7f8e9d0c..."]
             C2["parent 4b3c2a1f..."]
@@ -861,7 +866,12 @@ graph TB
     B1 --> B2 --> B3
     T1 --> T2 --> T3 --> T4
     C1 --> C2 --> C3 --> C4 --> C5 --> C6 --> C7
+```
 
+### Index Structure
+
+```mermaid
+graph TD
     subgraph "Index Structure"
         I1["Header: DIRC version=2 count=3"]
         I2["Entry 1: README.md -> blob a1b2c3..."]
@@ -872,7 +882,12 @@ graph TB
         I7["ctime, mtime, dev, ino, mode, size"]
     end
     I1 --> I2 --> I3 --> I4 --> I5 --> I6 --> I7
+```
 
+### Object Relationships
+
+```mermaid
+graph TD
     subgraph "Object Relationships"
         Commit1["Commit (2c3d4e)"]
         Tree1["Tree (7f8e9d)"]
@@ -880,50 +895,60 @@ graph TB
         Blob2["Blob (d4e5f6) file.txt"]
         SubTree["Tree (1a2b3c) src/"]
         Blob3["Blob (9a8b7c) Main.java"]
-        
+
         Commit1 -->|tree| Tree1
         Tree1 -->|100644 README.md| Blob1
         Tree1 -->|100644 file.txt| Blob2
         Tree1 -->|040000 src| SubTree
         SubTree -->|100644 Main.java| Blob3
     end
+```
 
+### Commit Graph
+
+```mermaid
+graph TD
     subgraph "Commit Graph"
         C_3["Commit 3 (master)"]
         C_2["Commit 2"]
         C_1["Commit 1"]
         C_0["Commit 0 (initial)"]
-        
+
         C_3 -->|parent| C_2
         C_2 -->|parent| C_1
         C_1 -->|parent| C_0
-        
+
         Master2["refs/heads/master"]
         Master2 -.-> C_3
         Head2["HEAD"]
         Head2 -.-> Master2
     end
+```
 
+### Three States Comparison
+
+```mermaid
+graph TD
     subgraph "Three States Comparison"
         subgraph "HEAD_State"
             H_Tree["Tree from commit"]
             H_File1["file1.txt -> blob abc"]
             H_File2["file2.txt -> blob def"]
         end
-        
+
         subgraph "Index_State"
             Idx_Entry1["file1.txt -> blob abc"]
             Idx_Entry2["file2.txt -> blob xyz"]
             Idx_Entry3["file3.txt -> blob 123"]
         end
-        
+
         subgraph "Worktree_State"
             W_File1["file1.txt (content abc)"]
             W_File2["file2.txt (modified!)"]
             W_File3["file3.txt (content 123)"]
             W_File4["file4.txt (untracked)"]
         end
-        
+
         H_Tree --> H_File1 & H_File2
         H_File1 -.->|same| Idx_Entry1
         H_File2 -.->|modified| Idx_Entry2
@@ -932,17 +957,27 @@ graph TB
         Idx_Entry2 -.->|same| W_File2
         Idx_Entry3 -.->|same| W_File3
     end
+```
 
+### SHA1_Hash_Computation
+
+```mermaid
+graph TD
     subgraph "SHA1_Hash_Computation"
         Hash1["1. Raw content: Hello"]
         Hash2["2. Add header: blob 5 (null) Hello"]
         Hash3["3. Compute SHA-1: 5ab2f8a4..."]
         Hash4["4. Compress with zlib"]
         Hash5["5. Store at: objects/5a/b2f8a4..."]
-        
+
         Hash1 --> Hash2 --> Hash3 --> Hash4 --> Hash5
     end
+```
 
+### Parsing Examples
+
+```mermaid
+graph TD
     subgraph "Parsing Examples"
         subgraph "Commit_Parsing"
             CP1["Raw bytes"]
@@ -952,10 +987,10 @@ graph TB
             CP5["Extract parent SHA"]
             CP6["Find message start"]
             CP7["Build Map"]
-            
+
             CP1 --> CP2 --> CP3 --> CP4 --> CP5 --> CP6 --> CP7
         end
-        
+
         subgraph "Tree_Parsing_Logic"
             TP1["Raw bytes"]
             TP2["Find space"]
@@ -964,11 +999,16 @@ graph TB
             TP5["Extract path"]
             TP6["Read 20 bytes SHA"]
             TP7["Create GitTreeLeaf"]
-            
+
             TP1 --> TP2 --> TP3 --> TP4 --> TP5 --> TP6 --> TP7
         end
     end
+```
 
+### Object_Type_Decision
+
+```mermaid
+graph TB
     subgraph "Object_Type_Decision"
         OT1["Read from storage"]
         OT2["Decompress"]
