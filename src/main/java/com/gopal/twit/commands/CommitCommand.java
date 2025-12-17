@@ -109,7 +109,7 @@ public class CommitCommand implements Command{
      */
     private String treeFromIndex(GitRepository repo, GitIndex index) throws Exception{
         //Dictionary: path -> List of entries in that directory
-        Map<String, List<GitIndexEntry>> contents = new HashMap<>();
+        Map<String, List<Object>> contents = new HashMap<>();
         contents.put("", new ArrayList<>());
 
         //Enumerate entries, and turn them into a dictionary where keys
@@ -127,6 +127,12 @@ public class CommitCommand implements Command{
                 if(!contents.containsKey(key)){
                     contents.put(key, new ArrayList<>());
                 }
+
+                if(key.isEmpty()){
+                    break;
+                }
+
+                //move to parent directory
                 int idx = key.lastIndexOf('/');
                 key = idx >= 0 ? key.substring(0,idx) : "";
             }
@@ -172,6 +178,7 @@ public class CommitCommand implements Command{
                     String leafSha = sha.getOrDefault(entry.getName(), entry.getSha());
 
                     tree.getItems().add(new GitTreeLeaf(mode, leaf, leafSha));
+
                 } else if(obj instanceof String dirName){
                     //This is a directory entry we need to add
                     String treeSha = sha.get(dirName);

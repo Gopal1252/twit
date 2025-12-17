@@ -57,7 +57,9 @@ public class ObjectIO {
         //Create appropriate object
         GitObject obj = switch (fmt) {
             case "blob" -> new GitBlob();
-            //TODO: add for other objects
+            case "commit" -> new GitCommit();
+            case "tree" -> new GitTree();
+            case "tag" -> new GitTag();
             default -> throw new Exception("Unknown type " + fmt + "for object " + sha);
         };
 
