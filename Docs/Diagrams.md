@@ -789,3 +789,201 @@ graph TD
         B2 --> B10 --> B11 --> B12 --> B13 --> B14
     end
 ```
+
+## Storage Structure Diagram
+
+```mermaid
+graph TB
+    subgraph "Git Repository Structure"
+        Root[".git/"]
+        
+        subgraph "Objects Storage"
+            ObjDir["objects/"]
+            Obj00["00/"]
+            Obj01["01/"]
+            ObjFF["ff/"]
+            ObjDots["..."]
+            BlobFile["a1b2c3d4e5f6... (blob)"]
+            CommitFile["f1e2d3c4b5a6... (commit)"]
+            TreeFile["1a2b3c4d5e6f... (tree)"]
+        end
+        
+        subgraph "References"
+            RefDir["refs/"]
+            HeadsDir["heads/"]
+            TagsDir["tags/"]
+            Master["master -> SHA"]
+            Feature["feature -> SHA"]
+            V10["v1.0 -> SHA"]
+        end
+        
+        subgraph "Working Area"
+            Index["index (binary)"]
+            Head["HEAD -> ref: refs/heads/master"]
+            Config["config"]
+            Desc["description"]
+        end
+    end
+
+    Root --> ObjDir & RefDir & Index & Head & Config & Desc
+    ObjDir --> Obj00 & Obj01 & ObjFF & ObjDots
+    Obj00 --> BlobFile
+    Obj01 --> CommitFile
+    ObjFF --> TreeFile
+    RefDir --> HeadsDir & TagsDir
+    HeadsDir --> Master & Feature
+    TagsDir --> V10
+
+    subgraph "Object Content Examples"
+        subgraph "Blob Object"
+            B1["Header: blob 13 (null)"]
+            B2["Content: Hello, World!"]
+            B3["Stored as: .git/objects/8a/b686ea..."]
+        end
+        
+        subgraph "Tree Object"
+            T1["100644 blob a1b2c3... README.md"]
+            T2["100644 blob d4e5f6... file.txt"]
+            T3["040000 tree 1a2b3c... src"]
+            T4["Stored as: .git/objects/7f/8e9d0c..."]
+        end
+        
+        subgraph "Commit Object"
+            C1["tree 7f8e9d0c..."]
+            C2["parent 4b3c2a1f..."]
+            C3["author Name email timestamp"]
+            C4["committer Name email timestamp"]
+            C5["(Empty Line)"]
+            C6["Commit message"]
+            C7["Stored as: .git/objects/2c/3d4e5f..."]
+        end
+    end
+    B1 --> B2 --> B3
+    T1 --> T2 --> T3 --> T4
+    C1 --> C2 --> C3 --> C4 --> C5 --> C6 --> C7
+
+    subgraph "Index Structure"
+        I1["Header: DIRC version=2 count=3"]
+        I2["Entry 1: README.md -> blob a1b2c3..."]
+        I3["ctime, mtime, dev, ino, mode, size"]
+        I4["Entry 2: file.txt -> blob d4e5f6..."]
+        I5["ctime, mtime, dev, ino, mode, size"]
+        I6["Entry 3: src/Main.java -> blob 9a8b7c..."]
+        I7["ctime, mtime, dev, ino, mode, size"]
+    end
+    I1 --> I2 --> I3 --> I4 --> I5 --> I6 --> I7
+
+    subgraph "Object Relationships"
+        Commit1["Commit (2c3d4e)"]
+        Tree1["Tree (7f8e9d)"]
+        Blob1["Blob (a1b2c3) README.md"]
+        Blob2["Blob (d4e5f6) file.txt"]
+        SubTree["Tree (1a2b3c) src/"]
+        Blob3["Blob (9a8b7c) Main.java"]
+        
+        Commit1 -->|tree| Tree1
+        Tree1 -->|100644 README.md| Blob1
+        Tree1 -->|100644 file.txt| Blob2
+        Tree1 -->|040000 src| SubTree
+        SubTree -->|100644 Main.java| Blob3
+    end
+
+    subgraph "Commit Graph"
+        C_3["Commit 3 (master)"]
+        C_2["Commit 2"]
+        C_1["Commit 1"]
+        C_0["Commit 0 (initial)"]
+        
+        C_3 -->|parent| C_2
+        C_2 -->|parent| C_1
+        C_1 -->|parent| C_0
+        
+        Master2["refs/heads/master"]
+        Master2 -.-> C_3
+        Head2["HEAD"]
+        Head2 -.-> Master2
+    end
+
+    subgraph "Three States Comparison"
+        subgraph "HEAD_State"
+            H_Tree["Tree from commit"]
+            H_File1["file1.txt -> blob abc"]
+            H_File2["file2.txt -> blob def"]
+        end
+        
+        subgraph "Index_State"
+            Idx_Entry1["file1.txt -> blob abc"]
+            Idx_Entry2["file2.txt -> blob xyz"]
+            Idx_Entry3["file3.txt -> blob 123"]
+        end
+        
+        subgraph "Worktree_State"
+            W_File1["file1.txt (content abc)"]
+            W_File2["file2.txt (modified!)"]
+            W_File3["file3.txt (content 123)"]
+            W_File4["file4.txt (untracked)"]
+        end
+        
+        H_Tree --> H_File1 & H_File2
+        H_File1 -.->|same| Idx_Entry1
+        H_File2 -.->|modified| Idx_Entry2
+        Idx_Entry3 -.->|new| W_File3
+        Idx_Entry1 -.->|same| W_File1
+        Idx_Entry2 -.->|same| W_File2
+        Idx_Entry3 -.->|same| W_File3
+    end
+
+    subgraph "SHA1_Hash_Computation"
+        Hash1["1. Raw content: Hello"]
+        Hash2["2. Add header: blob 5 (null) Hello"]
+        Hash3["3. Compute SHA-1: 5ab2f8a4..."]
+        Hash4["4. Compress with zlib"]
+        Hash5["5. Store at: objects/5a/b2f8a4..."]
+        
+        Hash1 --> Hash2 --> Hash3 --> Hash4 --> Hash5
+    end
+
+    subgraph "Parsing Examples"
+        subgraph "Commit_Parsing"
+            CP1["Raw bytes"]
+            CP2["Find 'tree '"]
+            CP3["Extract tree SHA"]
+            CP4["Find 'parent '"]
+            CP5["Extract parent SHA"]
+            CP6["Find message start"]
+            CP7["Build Map"]
+            
+            CP1 --> CP2 --> CP3 --> CP4 --> CP5 --> CP6 --> CP7
+        end
+        
+        subgraph "Tree_Parsing_Logic"
+            TP1["Raw bytes"]
+            TP2["Find space"]
+            TP3["Extract mode"]
+            TP4["Find null"]
+            TP5["Extract path"]
+            TP6["Read 20 bytes SHA"]
+            TP7["Create GitTreeLeaf"]
+            
+            TP1 --> TP2 --> TP3 --> TP4 --> TP5 --> TP6 --> TP7
+        end
+    end
+
+    subgraph "Object_Type_Decision"
+        OT1["Read from storage"]
+        OT2["Decompress"]
+        OT3["Parse header"]
+        OT4{"Check type"}
+        OT5["GitBlob"]
+        OT6["GitCommit"]
+        OT7["GitTree"]
+        OT8["GitTag"]
+        OT9["Deserialize"]
+        
+        OT1 --> OT2 --> OT3 --> OT4
+        OT4 -->|blob| OT5 --> OT9
+        OT4 -->|commit| OT6 --> OT9
+        OT4 -->|tree| OT7 --> OT9
+        OT4 -->|tag| OT8 --> OT9
+    end
+```
